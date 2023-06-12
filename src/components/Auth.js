@@ -1,6 +1,11 @@
+import { useDispatch, useSelector } from 'react-redux';
 import classes from './Auth.module.css';
+import { authAction } from '../store';
 
 const Auth = () => {
+
+ const dispatch= useDispatch()
+ const isLoggedIn= useSelector((state)=>state.AuthStatus.isLogin)
   return (
     <main className={classes.auth}>
       <section>
@@ -13,7 +18,7 @@ const Auth = () => {
             <label htmlFor='password'>Password</label>
             <input type='password' id='password' />
           </div>
-          <button>Login</button>
+          <button onClick={(e)=>{ e.preventDefault();  dispatch(authAction.login())}}>Login</button>
         </form>
       </section>
     </main>

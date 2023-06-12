@@ -4,8 +4,10 @@ import { counterActions } from "../store/index";
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counterSelctor = useSelector((state) => state.counter);
-  const isShow = useSelector((state) => state.showCounter);
+  const counterSelctor = useSelector((state) => state.count.counter);
+  const isShow = useSelector((state) => state.count.showCounter);
+
+  const isLoggedIn = useSelector((state) => state.AuthStatus.isLogin);
   console.log(counterSelctor);
   const toggleCounterHandler = () => {
     dispatch(counterActions.toggleCounter());
@@ -22,16 +24,20 @@ const Counter = () => {
     dispatch(counterActions.increase(5));
   };
   return (
-    <main className={classes.counter}>
-      <h1>Redux Counter</h1>
-      {isShow && <div className={classes.value}>{counterSelctor}</div>}
-      <button onClick={incrementHandler}>INCREMENT</button>
-      <button onClick={decrementHandler}>DECREMENT</button>
+    <>
+      {isLoggedIn && (
+        <main className={classes.counter}>
+          <h1>Redux Counter</h1>
+          {isShow && <div className={classes.value}>{counterSelctor}</div>}
+          <button onClick={incrementHandler}>INCREMENT</button>
+          <button onClick={decrementHandler}>DECREMENT</button>
 
-      <button onClick={increase}>increment by 5</button>
+          <button onClick={increase}>increment by 5</button>
 
-      <button onClick={toggleCounterHandler}>Toggle Counter</button>
-    </main>
+          <button onClick={toggleCounterHandler}>Toggle Counter</button>
+        </main>
+      )}
+    </>
   );
 };
 
